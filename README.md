@@ -37,6 +37,12 @@ and then login from the command line:
 firebase login
 ```
 
+Connect your Firebase backend to your repo. Normally, if this were a fresh project, we would `firebase init`. However, since we already have all the necessary files except one, run only the following and select your Firebase project: 
+
+```
+firebase use --add
+```
+
 You are now all set to deploy to Firebase! 
 
 ## Install, Run & Deploy Svelte
