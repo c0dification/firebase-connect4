@@ -3,10 +3,7 @@
   import GameBoardRow from './GameBoardRow.svelte'
   export let board
   export let isCurrentTurn
-
-  async function dropToken(columnNumber) {
-
-  }
+  export let winnerId
 </script>
 
 <div class="container box has-background-dark">
@@ -14,7 +11,7 @@
   <!-- {#if isCurrentTurn} -->
     <div class="level">
       {#each board[0] as headerTile, i}
-        <GameBoardHeaderTile index={ i } isActive={ isCurrentTurn && headerTile === 0 }  />
+        <GameBoardHeaderTile index={ i } isActive={ !winnerId && isCurrentTurn && headerTile === 0 }  />
       {/each}
     </div>
   <!-- {/if} -->

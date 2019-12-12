@@ -41,7 +41,9 @@
   <div class="level-left has-text-success">
     <div>
       <p class="title has-text-success">{ $profile.username }</p>
-      {#if isPlayerTurn()}
+      {#if $currentRoom.room.winnerId}
+        <p class="tag is-dark heading">GAME OVER</p>
+      {:else if isPlayerTurn()}
         <p class="tag is-success heading">CURRENT TURN</p>
       {:else}
         <p class="heading">WAITING ...</p>
@@ -70,7 +72,9 @@
   <div class="level-right has-text-link">
     <div>
       <p class="title has-text-link">{ getOpponentUsername() }</p>
-      {#if !isPlayerTurn() && getCurrentTurn() === $currentRoom.boards.length}
+      {#if $currentRoom.room.winnerId}
+        <p class="tag is-dark heading">GAME OVER</p>
+      {:else if !isPlayerTurn() && getCurrentTurn() === $currentRoom.boards.length}
         <p class="tag is-link heading">CURRENT TURN</p>
       {:else}
         <p class="heading">WAITING ...</p>
@@ -82,14 +86,14 @@
 
 <div class="container">
       
-  <GameBoard board={ getCurrentBoard() } isCurrentTurn={ isPlayerTurn() } />
+  <GameBoard board={ getCurrentBoard() } isCurrentTurn={ isPlayerTurn() } winnerId={ $currentRoom.room.winnerId }/>
 
   <div class="level">
     <div class="level-item">
       <button class="button is-info" on:click={returnHome}>Return to Lobby</button>
     </div>
     <div class="level-item">
-      <button class="button is-danger" on:click={abandonRoom}>Give Up!</button>
+      <button class="button is-danger" disabled={ $currentRoom.room.winnerId } on:click={abandonRoom}>Give Up!</button>
     </div>
   </div>
 </div>
