@@ -16,6 +16,10 @@ import {
 // INTERFACES
 import { GameBoard, Room } from './interfaces'
 
+
+
+
+// FUNCTIONS
 // create a player document when a new user signs up
 export const authCreated = functions.auth.user().onCreate((user) => {
   return firestore().collection('players').doc(user.uid).set({
@@ -28,11 +32,13 @@ export const authCreated = functions.auth.user().onCreate((user) => {
   })
 })
 
-const getError = (errorMessage: string): functions.https.HttpsError => {
-  console.error(errorMessage)
-  return new functions.https.HttpsError('invalid-argument', errorMessage)
-}
 
+
+
+// process the move submitted by a client application
+// ensure the move is valid and legal
+// update the database
+// check for a winner and make updates accordingly
 export const submitMove = functions.https.onCall(async (data: { roomId: string, columnIndex: number }, context) => {
   /* 
   data: {
@@ -40,6 +46,11 @@ export const submitMove = functions.https.onCall(async (data: { roomId: string, 
     columnIndex: number
   }
   */
+
+  function getError(errorMessage: string): functions.https.HttpsError {
+    console.error(errorMessage)
+    return new functions.https.HttpsError('invalid-argument', errorMessage)
+  }
 
   const { roomId, columnIndex } = data
   const playerId = context && context.auth ? context.auth.uid : null
